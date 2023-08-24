@@ -16,4 +16,5 @@ public class RotateScript : MonoBehaviour
     {
         transform.Rotate(0, 0, rotateSpeed * Time.deltaTime);
     }
+
 }
