@@ -9,16 +9,18 @@ public class LittleCircle : MonoBehaviour
 
     bool ballStop = false;
 
-    Rigidbody2D rigidbody2D;
+    Rigidbody2D rb;
 
     GameObject MainCircle;
 
     GameObject GameManager;
     GameManager gameManager;
+
+    int ballNo;
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        rigidbody2D = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         MainCircle = GameObject.FindGameObjectWithTag("MainCircle");
         GameManager = GameObject.FindGameObjectWithTag("GameManager");
         gameManager = GameManager.GetComponent<GameManager>();
@@ -30,7 +32,30 @@ public class LittleCircle : MonoBehaviour
     void Update()
     {
         BallStop();
-        
+
+        ChangeScale();
+
+    }
+    void ChangeScale()
+    {
+        ballNo = gameManager.numberBall;
+        if (ballNo >= 12 && ballNo <= 16)
+        {
+           transform.localScale = new Vector3(0.35f, 0.35f, 0.35f);
+        }
+        else if (ballNo > 16 && ballNo <= 20)
+        {
+
+           transform.localScale = new Vector3(0.30f, 0.30f, 0.30f);
+
+        }
+        else if (ballNo > 20 && ballNo <= 24)
+        {
+
+           transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+
+        }
+      
     }
     void BallStop()
     {
@@ -44,16 +69,16 @@ public class LittleCircle : MonoBehaviour
     {
         if (collision.gameObject == MainCircle)
         {
-            rigidbody2D.velocity = Vector2.zero;
+            rb.velocity = Vector2.zero;
             gameObject.transform.SetParent(MainCircle.transform);
             ballStop = true;
             gameManager.UpdateBallsPosition();
-            print("Degdi");
+           
         }
         else if (collision.gameObject.CompareTag("LittleCircle"))
         {
             gameManager.Lose();
-            print("Kaybettin");
+          
         }
     }
 }

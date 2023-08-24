@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     GameObject LittleCircle;
-    int numberBall;
+    public int numberBall;
     List<Rigidbody2D> Balls = new List<Rigidbody2D>();
 
     float ballSpeed=20f;
@@ -19,11 +19,17 @@ public class GameManager : MonoBehaviour
 
     int lvl;
 
+    [SerializeField]
+    ButtonManager buttonManager;
+
+
+
     void Start()
     {
 
         LevelControl();
         AddedFirstBalls();
+
     }
     void LevelControl()
     {
@@ -42,6 +48,12 @@ public class GameManager : MonoBehaviour
     void AddedFirstBalls()
     {
         numberBall = lvl * 3;
+        if (numberBall > 24)
+        {
+            numberBall = Random.Range(10, 24); 
+        }
+       
+        
         for(int i = 0; i < numberBall; i++)
         {
 
@@ -75,8 +87,11 @@ public class GameManager : MonoBehaviour
         else if (Balls.Count <= 0)
         {
             Win();
-            print("Bitti");
+
         }
+      
+       
+     
     }
     public void UpdateBallsPosition()
     {
@@ -94,10 +109,12 @@ public class GameManager : MonoBehaviour
     }
     void Win()
     {
-       
+        buttonManager.WinImageMethod();
+        this.enabled = false;
     }
     public void Lose()
     {
-
+        buttonManager.LoseImageMethod();
+        this.enabled = false;
     }
 }
